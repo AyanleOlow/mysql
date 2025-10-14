@@ -11,7 +11,7 @@
 ### MariaDB 
 ```CREATE DATABASE todo;```
 
-Lag eller velg en databasebruker du vil bruke. Bytt ut informasjonen under ```conn``` i ```app.py``` med riktig innloggingsinformasjon (IP-adresse, brukernavn, passord, og eventuelt databasenavn hvis du ikke bruker *todo*).
+Lag eller velg en databasebruker du vil bruke. Bytt ut informasjonen under ```get_connection()``` i ```app.py``` med riktig innloggingsinformasjon (IP-adresse, brukernavn, passord, og eventuelt databasenavn hvis du ikke bruker *todo*).
 * Hvis du kjører Python-koden og databasen på forskjellige maskiner, må du erstatte ```localhost``` med IP-adressen til maskinen hvor databasen ligger.
 
 ### Python
