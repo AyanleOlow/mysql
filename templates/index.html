@@ -7,6 +7,7 @@
     <title>To-Do List</title>
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../app.py">
+    <script src="../static/script.js"> </script>
 </head>
 
 <body>
@@ -19,9 +20,11 @@
         </form>
         
         <ul>
-            <!-- Forklar hva denne løkken ⬇ gjør. Og hvor kommer tasks fra? li er ofte brukt for lister, {{task[1]}} lar py sette in en verdi gjennom variabler. [1] referer hvilken verdi i en array. -->
+            {# Forklar hva denne løkken ⬇ gjør. Og hvor kommer tasks fra? li er ofte brukt for lister, {{task[1]}} lar py sette in en verdi gjennom variabler. [1] referer hvilken verdi i en array. #}
             {% for task in tasks %} 
-            <li>{{ task[1] }} </li> 
+                <li>{{ task[1] }}</li> 
+            {% else %}
+                <li>No tasks found.</li>
             {% endfor %}
         </ul>
     </div>

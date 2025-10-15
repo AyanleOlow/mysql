@@ -14,35 +14,12 @@ def get_connection():
     connection = mysql.connector.connect(
         # Bytt ut informasjonen her med dine egne verdier:
         host = 'localhost', # IP-adressen til databasen (127.0.0.1 = localhost = maskinen som kjører koden)
-        user= 'mysqlroot',       
-        password = 'root1234',
+        user= 'grupperoot',       
+        password = 'mysql1234',
         database= 'readme',
     )
     
     cursor = connection.cursor()
-    
-    # 1. Create a new user with mysql_native_password authentication
-    create_user_query = """
-    CREATE USER IF NOT EXISTS 'mysqlroot'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root1234';
-    """
-
-    # 2. Give that user privileges on your database
-    grant_privileges_query = """
-    GRANT ALL PRIVILEGES ON your_database.* TO 'mysqlroot'@'localhost';
-    """
-
-    # 3. Apply changes
-    flush_privileges_query = "FLUSH PRIVILEGES;"
-
-    try:
-        cursor.execute(create_user_query)
-        cursor.execute(grant_privileges_query)
-        cursor.execute(flush_privileges_query)
-        print("User created and privileges granted successfully.")
-    except mysql.connector.Error as err:
-        print(f"Could not create user")
-
-
 
 
     return connection
@@ -56,9 +33,20 @@ def create_table():
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS tasks (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    task VARCHAR(255) NOT NULL
+                    task VARCHAR(255)
                 )
             ''')
+
+            cursor.execute("SELECT * FROM tasks")
+            tasks = cursor.fetchall()
+
+            if not tasks:
+                print("No tasks found.")
+                cursor.execute("INSERT INTO tasks (task) VALUES ('Insert task')")
+                cursor.execute("INSERT INTO tasks (task) VALUES ('Insert task')")
+            else:
+                for task in tasks: 
+                    print(task)
 
             cursor.execute("SHOW TABLES")
             tables = cursor.fetchall()
@@ -72,7 +60,7 @@ def create_table():
 create_table() 
 
 @app.route('/')  # når kjører denne routen? Når root folder åpnes i browser.
-def index():
+def index(): 
     try:
         conn = get_connection()
         cursor = conn.cursor()
