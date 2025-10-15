@@ -43,6 +43,8 @@ def get_connection():
         print(f"Could not create user")
 
 
+
+
     return connection
 
 def create_table():
