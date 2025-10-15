@@ -1,9 +1,18 @@
 /* Her kan du putte JavaScript :) */
-const pages = {
-    index: "/index",
-    about: "/about"
-}
-
-function switchPage(page) {
-    window.location.href = pages[page]
+function sendData(id, type, data) {
+    info = {
+        id: id,
+        type: type,
+        data: data
+    }
+    fetch('/api/data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(info)
+    })
+    .then(response => response.json())
+    .then(data => {
+    document.getElementById('response').textContent = data.response;
+    })
+    .catch(err => console.error(err));
 }

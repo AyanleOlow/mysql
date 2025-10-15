@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="../app.py">
-    <script src="../static/script.js"> </script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 
 <body>
@@ -22,12 +20,31 @@
         <ul>
             {# Forklar hva denne løkken ⬇ gjør. Og hvor kommer tasks fra? li er ofte brukt for lister, {{task[1]}} lar py sette in en verdi gjennom variabler. [1] referer hvilken verdi i en array. #}
             {% for task in tasks %} 
-                <li>{{ task[1] }}</li> 
+                <li id="{{ task[0] }}">
+                    <input type="text" placeholder="{{ task[1] }}"></input>
+                    <input type="checkbox">
+                    <button onclick="sendData('{{ task[0] }}', 'change', 'null')">
+                        <p>CHANGE</p>
+                    </button>
+                    <button>
+                        <p>DELETE</p>
+                    </button>
+                </li> 
             {% else %}
                 <li>No tasks found.</li>
             {% endfor %}
         </ul>
     </div>
+
+    <style>
+        li {
+            display: flex;
+            flex-direction: row;
+        }
+        input::placeholder {
+            color: rgb(0, 0, 0);
+        }
+    </style>
 </body>
 
 </html>

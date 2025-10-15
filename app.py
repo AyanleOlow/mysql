@@ -2,7 +2,7 @@
 Enkel to-do app med Flask + MariaDB. Les readme.md før du begynner.
 """
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 import mysql.connector
 from mysql.connector import Error
 import getpass
@@ -65,7 +65,7 @@ def index():
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM tasks')  
-        tasks = cursor.fetchall()              
+        tasks = cursor.fetchall()
         conn.close()
         return render_template('index.html', tasks=tasks) # hva gjør denne linjen? Hva er tasks? Åpner index.html fra templates.
     except Error as e:
@@ -86,6 +86,26 @@ def add_task():
         conn.close()
 
     return redirect('/') # hva skjer hvis du fjerner denne linjen?   den redricter deg til den forstå siden og vis du fjerner den så kan du ikke blir redirecte til forsiden.
+
+@app.route('/api/data', methods=['GET', 'POST'])
+def data():
+    if request.method == 'POST':
+        received = request.get_json()
+        print(received['id'], received['data'])
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        update_query = "UPDATE tasks SET task = %s WHERE id = %s"
+        values = (received['data'], received['id'])
+
+        cursor.execute(update_query, values)
+        conn.commit()
+
+        conn.close()
+        return jsonify({'response': f"Python got: {received}"})
+    else:
+        return jsonify({'message': 'Send me some data!'})
+    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
