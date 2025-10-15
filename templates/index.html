@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
     <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../app.py">
 </head>
 
 <body>
@@ -18,7 +19,7 @@
         </form>
         
         <ul>
-            <!-- Forklar hva denne løkken ⬇ gjør. Og hvor kommer tasks fra? -->
+            <!-- Forklar hva denne løkken ⬇ gjør. Og hvor kommer tasks fra? li er ofte brukt for lister, {{task[1]}} lar py sette in en verdi gjennom variabler. [1] referer hvilken verdi i en array. -->
             {% for task in tasks %} 
             <li>{{ task[1] }} </li> 
             {% endfor %}
